@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+  <servlet>
+    <servlet-name>ShowBalance</servlet-name>
+    <servlet-class>coreservlets.ShowBalance</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowBalance</servlet-name>
+    <url-pattern>/show-balance</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RandomNumberServlet</servlet-name>
+    <servlet-class>coreservlets.RandomNumberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RandomNumberServlet</servlet-name>
+    <url-pattern>/random-number</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RegistrationServlet</servlet-name>
+    <servlet-class>coreservlets.RegistrationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistrationServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PrimeServlet</servlet-name>
+    <servlet-class>coreservlets.PrimeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PrimeServlet</servlet-name>
+    <url-pattern>/prime</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>

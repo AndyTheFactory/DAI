@@ -1,0 +1,4 @@
+parkyou\controller\GuestPreferences.class
+parkyou\controller\LoginController.class
+parkyou\controller\RegistrationController.class
+parkyou\controller\ThemeSwitcherBean.class
