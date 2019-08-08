@@ -1,6 +1,7 @@
 /Lab2/webapps/mvc2/nbproject/private/
 /Lab2/webapps/mvc2/build/
 /Lab2/webapps/mvc2/dist/
+<<<<<<< HEAD
 /Lab4/ajax-basics-1/nbproject/private/
 /Lab4/ajax-basics-1/nbbuild/
 /Lab4/ajax-basics-1/dist/
@@ -9,3 +10,6 @@
 /Lab4/ajax/nbbuild/
 /Lab5/JPA_Examples/persistence/order/dist/
 /Lab5/JPA_Examples/persistence/address-book/dist/
+=======
+/Lab3/JavaServerFaces/target/
+>>>>>>> fbc957ce0690a31e937d824fade3a55791e9e785
