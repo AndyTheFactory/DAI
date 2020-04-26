@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/admin-top.xhtml"> <!--template="/admin-top.xhtml>" to use horizontal layout -->
-
+    <p:importConstants type="parkyou.language.Constants" var="Texte" /> 
     <ui:define name="head">
         <title>Admin Starter</title>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>
@@ -19,7 +20,7 @@
     </ui:define>
 
     <ui:define name="logo">
-        Admin Starter
+        Admin Starter <h:outputText value="#{Text.APP_TITLE}"/>
     </ui:define>
 
     <ui:define name="menu">
