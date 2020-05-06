@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Dell
+ * @author andrei
  */
 @Entity
-@Table(catalog = "", schema = "APP")
+@Table(name = "REPORTS")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reports.findAll", query = "SELECT r FROM Reports r"),
@@ -40,24 +40,24 @@ public class Reports implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PARKINGSPOT_ID", nullable = false)
+    @Column(name = "PARKINGSPOT_ID")
     private int parkingspotId;
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "CREATED")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "FREESPOTS")
     private int freespots;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IS_OBSOLETE", nullable = false)
+    @Column(name = "IS_OBSOLETE")
     private Boolean isObsolete;
     @Column(name = "USER_ID")
     private Integer userId;

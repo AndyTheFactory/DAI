@@ -1,39 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:loadBundle basename="parkyou.menu" var="msgp"/>
      <ul class="nav navbar-nav">
         <li>
             <p:link outcome="/index" onclick="clearBreadCrumbs()">
-                <i class="fa fa-home"></i>
-                <span>Home</span>
+                <i class="fa fa-map"></i>
+                <span>#{msgp['title.map']}</span>
             </p:link>
         </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cars <span
-                    class="caret"></span>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgp['title.parkingspot']}
+                <span class="caret"></span>
                 <i class="fa fa-car"></i>
             </a>
 
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <p:link outcome="/car-list">
-                        <span>List cars</span>
+                    <p:link outcome="/parking-list">
+                        <span>#{msgp['title.list']}</span>
                         <i class="fa fa-th-list"></i>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/car-form">
-                        <span>New car</span>
-                        <i class="fa fa-plus-circle"></i>
+                        <span>#{msgp['title.schedule']}</span>
+                        <i class="fa fa-calendar"></i>
                     </p:link>
                 </li>
-
-
             </ul>
-
         </li>
+        <li>
+            <p:link outcome="/my-parking" >
+                <i class="fa fa-map"></i>
+                <span>#{msgp['title.my_parking']}</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/my-reservations" >
+                <i class="fa fa-map"></i>
+                <span>#{msgp['title.my_reservations']}</span>
+            </p:link>
+        </li>
+         
     </ul>
 
 </ui:composition>
