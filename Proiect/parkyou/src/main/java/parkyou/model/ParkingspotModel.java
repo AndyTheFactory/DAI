@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import parkyou.entity.Parkingspot;
+import parkyou.entity.User;
 
 /**
  *
@@ -35,9 +36,23 @@ public class ParkingspotModel {
         
         return query.getSingleResult();
     }
+    public long count(Filter<Parkingspot> filter, User user) {
+        TypedQuery<Long> query = em.createNamedQuery("Parkingspots.countOwner",Long.class);
+        query.setParameter("owner", user.getId());
+        
+        return query.getSingleResult();
+    }
 
-    public Parkingspot findById(Integer id) {
+    public static Parkingspot findById(Integer id) {
         return new Parkingspot(id);
+    }
+
+    public List<Parkingspot> paginate(Filter<Parkingspot> filter, User user) {
+        TypedQuery<Parkingspot> query = em.createNamedQuery("Parkingspots.findByOwner",Parkingspot.class);
+        query.setParameter("owner", user.getId());
+        
+        
+        return query.getResultList();
     }
     
 }

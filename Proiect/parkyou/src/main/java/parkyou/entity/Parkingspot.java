@@ -28,7 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Parkingspots.count", query = "SELECT count(p) FROM Parkingspot p"),
+    @NamedQuery(name = "Parkingspots.countOwner", query = "SELECT count(p) FROM Parkingspot p where p.owner = :owner"),
     @NamedQuery(name = "Parkingspots.findAll", query = "SELECT p FROM Parkingspot p"),
+    @NamedQuery(name = "Parkingspots.findByOwner", query = "SELECT p FROM Parkingspot p where p.owner = :owner"),
     @NamedQuery(name = "Parkingspots.findById", query = "SELECT p FROM Parkingspot p WHERE p.id = :id"),
     @NamedQuery(name = "Parkingspots.findByX1", query = "SELECT p FROM Parkingspot p WHERE p.x1 = :x1"),
     @NamedQuery(name = "Parkingspots.findByY1", query = "SELECT p FROM Parkingspot p WHERE p.y1 = :y1"),

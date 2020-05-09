@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "Users.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-    @NamedQuery(name = "Users.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
-    @NamedQuery(name = "Users.findByLastname", query = "SELECT u FROM User u WHERE u.lastname = :lastname"),
+    @NamedQuery(name = "Users.count", query = "SELECT count(u) FROM User u"),
     @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
+    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
+    @NamedQuery(name = "Users.findByEmailPassword", query = "SELECT u FROM User u WHERE u.email = :email and u.password = :password"),
+    @NamedQuery(name = "Users.findByUsernamePassword", query = "SELECT u FROM User u WHERE u.username = :username and u.password = :password")
     })
 public class User implements Serializable {
 
@@ -69,6 +69,10 @@ public class User implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "PASSWORD")
     private String password;
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "GRP")
+    private String group;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "HOMEX")
     private Double homex;
@@ -76,7 +80,7 @@ public class User implements Serializable {
     private Double homey;
     @Lob
     @Column(name = "AVATAR")
-    private Serializable avatar;
+    private  byte[] avatar;
 
     public User() {
     }
@@ -161,8 +165,16 @@ public class User implements Serializable {
         return avatar;
     }
 
-    public void setAvatar(Serializable avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     @Override

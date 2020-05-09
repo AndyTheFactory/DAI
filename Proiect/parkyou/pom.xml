@@ -60,6 +60,12 @@
         </dependency>
         <!-- JavaX -->
         <dependency>
+            <groupId>org.talend.libraries</groupId>
+            <artifactId>hibernate-core-3.6.10.Final</artifactId>
+            <version>6.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>

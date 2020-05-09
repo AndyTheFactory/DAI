@@ -44,7 +44,9 @@ public class LogonMB extends AdminSession implements Serializable {
 
     @Inject
     private ExternalContext externalContext;
-
+    
+    private Integer userId;
+    
     private String password;
 
     private String email;
@@ -54,7 +56,7 @@ public class LogonMB extends AdminSession implements Serializable {
     public void autoLogin() throws IOException {
         String emailCookie = Faces.getRequestCookie("admin-email");
         String passCookie = Faces.getRequestCookie("admin-pass");
-        if (has(emailCookie) && has(passCookie)) {
+        if (has(emailCookie) && has(passCookie) && has(userId)) {
             this.email = emailCookie;
             this.password = passCookie;
             login();
@@ -67,12 +69,33 @@ public class LogonMB extends AdminSession implements Serializable {
                 facesContext.responseComplete();
                 break;
             case SEND_FAILURE:
-                Messages.addError(null, "Login failed");
+                Messages.addError(null, "Autentificare esuata");
                 externalContext.getFlash().setKeepMessages(true);
                 break;
             case SUCCESS:
                 externalContext.getFlash().setKeepMessages(true);
-                addDetailMessage("Logged in successfully as <b>" + email + "</b>");
+                addDetailMessage("Autentificat ca <b>" + email + "</b>");
+                if (remember) {
+                    storeCookieCredentials(email, password);
+                }
+                Faces.redirect(adminConfig.getIndexPage());
+                break;
+            case NOT_DONE:
+                Messages.addError(null, "Login failed");
+        }
+    }
+    public void loginGuest() throws IOException {
+        switch (continueAuthenticationGuest()) {
+            case SEND_CONTINUE:
+                facesContext.responseComplete();
+                break;
+            case SEND_FAILURE:
+                Messages.addError(null, "Autentificare esuata");
+                externalContext.getFlash().setKeepMessages(true);
+                break;
+            case SUCCESS:
+                externalContext.getFlash().setKeepMessages(true);
+                addDetailMessage("Autentificat ca <b>Vizitator</b>");
                 if (remember) {
                     storeCookieCredentials(email, password);
                 }
@@ -93,6 +116,12 @@ public class LogonMB extends AdminSession implements Serializable {
                 (HttpServletResponse) externalContext.getResponse(),
                 AuthenticationParameters.withParams().rememberMe(remember)
                         .credential(new UsernamePasswordCredential(email, password)));
+    }
+    private AuthenticationStatus continueAuthenticationGuest() {
+        return securityContext.authenticate((HttpServletRequest) externalContext.getRequest(),
+                (HttpServletResponse) externalContext.getResponse(),
+                AuthenticationParameters.withParams().rememberMe(true)
+                        .credential(new UsernamePasswordCredential("guest", "guest")));
     }
 
     @Override
@@ -126,6 +155,14 @@ public class LogonMB extends AdminSession implements Serializable {
 
     public String getCurrentUser() {
         return securityContext.getCallerPrincipal() != null ? securityContext.getCallerPrincipal().getName() : "";
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
 }
