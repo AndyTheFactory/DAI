@@ -5,6 +5,7 @@
  */
 package parkyou.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 import javax.ejb.Stateless;
@@ -43,8 +44,11 @@ public class ParkingspotModel {
         return query.getSingleResult();
     }
 
-    public static Parkingspot findById(Integer id) {
-        return new Parkingspot(id);
+    public Parkingspot findById(Integer id) {
+        TypedQuery<Parkingspot> query = em.createNamedQuery("Parkingspots.findById",Parkingspot.class);
+        query.setParameter("id", id );
+        
+        return query.getSingleResult();
     }
 
     public List<Parkingspot> paginate(Filter<Parkingspot> filter, User user) {
@@ -53,6 +57,34 @@ public class ParkingspotModel {
         
         
         return query.getResultList();
+    }
+    
+    public List<Parkingspot> paginate(Filter<Parkingspot> filter, Date fromDate, Date toDate) {
+        TypedQuery<Parkingspot> query = em.createNamedQuery("Parkingspots.findBySchedule",Parkingspot.class);
+        query.setParameter("fromdate", fromDate);
+        query.setParameter("todate", toDate);
+        
+        
+        return query.getResultList();
+    }
+    
+    
+    public void remove(Parkingspot parking){
+        if (!em.contains(parking)) {
+            parking = em.merge(parking);
+        }
+
+        em.remove(parking);
+        
+    }
+    
+    public Parkingspot update(Parkingspot parking){
+        return em.merge(parking);
+        
+    }
+
+    public void insert(Parkingspot parking){
+        em.persist(parking);
     }
     
 }

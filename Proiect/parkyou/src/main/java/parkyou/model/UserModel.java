@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import parkyou.entity.Parkingspot;
 import parkyou.entity.User;
 
@@ -36,8 +37,15 @@ public class UserModel {
         return query.getSingleResult();
     }
 
-    public static Parkingspot findById(Integer id) {
-        return new Parkingspot(id);
+    public List<User> findAll() {
+        TypedQuery<User> query = em.createNamedQuery("Users.findAll",User.class);
+        return query.getResultList();
+    }
+    public User findById(Integer id) {
+        TypedQuery<User> query = em.createNamedQuery("Users.findById",User.class);
+        query.setParameter("id", id );
+        
+        return query.getSingleResult();
     }
     public User findByEmail(String email)  throws NoResultException{
         TypedQuery<User> query = em.createNamedQuery("Users.findByEmail",User.class);
@@ -87,5 +95,23 @@ public class UserModel {
         }catch(NoResultException e){
 	        return Optional.empty();
         } 
+    }
+    
+    public void remove(User user){
+        if (!em.contains(user)) {
+            user = em.merge(user);
+        }
+
+        em.remove(user);
+        
+    }
+    
+    public User update(User user){
+        return em.merge(user);
+        
+    }
+
+    public void insert(User user){
+        em.persist(user);
     }
 }

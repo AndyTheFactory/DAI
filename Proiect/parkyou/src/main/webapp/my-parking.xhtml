@@ -22,10 +22,9 @@
             <p:focus context="@form"/>
            
             <p:outputPanel id="buttonPanel" >
-                <p:button value="Schimba programul" icon="fa fa-calendar" styleClass="btn-success"
+                <p:button value="Modifica programul" icon="fa fa-calendar" styleClass="btn-success"
                           outcome="my-parking-form.jsf"                                        
                           disabled="#{empty myParkingMB.selectedParking}"                                         
-                          ajax="false"
                         >
                     <f:param name="id" value="#{myParkingMB.selectedParking.id}"/>
                 </p:button>
@@ -56,9 +55,6 @@
                         </p:column>
                         <p:column headerText="Denumire" sortBy="#{parking.name}">
                             #{parking.name}
-                        </p:column>
-                        <p:column headerText="Nr Locuri" sortBy="#{parking.nrParkspaces}" >                            
-                            #{parking.nrParkspaces}
                         </p:column>
                     </p:dataTable>
             </p:panel>

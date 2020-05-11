@@ -35,3 +35,6 @@ a#logout {
         padding-top:100px;
     }
 }
+ul.dropdown-menu > li{
+    min-width: 270px;
+}

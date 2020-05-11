@@ -7,17 +7,23 @@ package parkyou.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import jdk.internal.jline.internal.Nullable;
 
 /**
  *
@@ -31,19 +37,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Parkingspots.countOwner", query = "SELECT count(p) FROM Parkingspot p where p.owner = :owner"),
     @NamedQuery(name = "Parkingspots.findAll", query = "SELECT p FROM Parkingspot p"),
     @NamedQuery(name = "Parkingspots.findByOwner", query = "SELECT p FROM Parkingspot p where p.owner = :owner"),
-    @NamedQuery(name = "Parkingspots.findById", query = "SELECT p FROM Parkingspot p WHERE p.id = :id"),
-    @NamedQuery(name = "Parkingspots.findByX1", query = "SELECT p FROM Parkingspot p WHERE p.x1 = :x1"),
-    @NamedQuery(name = "Parkingspots.findByY1", query = "SELECT p FROM Parkingspot p WHERE p.y1 = :y1"),
-    @NamedQuery(name = "Parkingspots.findByX2", query = "SELECT p FROM Parkingspot p WHERE p.x2 = :x2"),
-    @NamedQuery(name = "Parkingspots.findByY2", query = "SELECT p FROM Parkingspot p WHERE p.y2 = :y2"),
-    @NamedQuery(name = "Parkingspots.findByNrParkspaces", query = "SELECT p FROM Parkingspot p WHERE p.nrParkspaces = :nrParkspaces"),
-    @NamedQuery(name = "Parkingspots.findByCreated", query = "SELECT p FROM Parkingspot p WHERE p.created = :created"),
-    @NamedQuery(name = "Parkingspots.findByLastcheck", query = "SELECT p FROM Parkingspot p WHERE p.lastcheck = :lastcheck")})
+    @NamedQuery(name = "Parkingspots.findBySchedule", query = "SELECT p FROM Parkingspot p INNER JOIN p.schedules s where s.fromdate>=:fromdate and s.todate<=:todate")
+        
+})
 public class Parkingspot implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "ID")
     private Integer id;
@@ -67,22 +69,18 @@ public class Parkingspot implements Serializable {
     @NotNull
     @Column(name = "Y2")
     private int y2;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "NR_PARKSPACES")
-    private int nrParkspaces;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
+    @Nullable
     @Column(name = "OWNER")
-    private int owner;
+    private Integer owner;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATED")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Column(name = "LASTCHECK")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastcheck;
+    
+    @OneToMany
+    private List<Parkingschedule> schedules;
 
     public Parkingspot() {
     }
@@ -91,13 +89,12 @@ public class Parkingspot implements Serializable {
         this.id = id;
     }
 
-    public Parkingspot(Integer id, int x1, int y1, int x2, int y2, int nrParkspaces, Date created) {
+    public Parkingspot(Integer id, int x1, int y1, int x2, int y2,  Date created) {
         this.id = id;
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-        this.nrParkspaces = nrParkspaces;
         this.created = created;
     }
 
@@ -141,28 +138,12 @@ public class Parkingspot implements Serializable {
         this.y2 = y2;
     }
 
-    public int getNrParkspaces() {
-        return nrParkspaces;
-    }
-
-    public void setNrParkspaces(int nrParkspaces) {
-        this.nrParkspaces = nrParkspaces;
-    }
-
     public Date getCreated() {
         return created;
     }
 
     public void setCreated(Date created) {
         this.created = created;
-    }
-
-    public Date getLastcheck() {
-        return lastcheck;
-    }
-
-    public void setLastcheck(Date lastcheck) {
-        this.lastcheck = lastcheck;
     }
 
     public String getName() {
@@ -173,13 +154,23 @@ public class Parkingspot implements Serializable {
         this.name = name;
     }
 
-    public int getOwner() {
+    public Integer getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(Integer owner) {
         this.owner = owner;
     }
+    
+    
+    public List<Parkingschedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Parkingschedule> schedules) {
+        this.schedules = schedules;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -204,6 +195,10 @@ public class Parkingspot implements Serializable {
     @Override
     public String toString() {
         return "parkyou.entity.Parkingspots[ id=" + id + " ]";
+    }
+
+    public void setOwner(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

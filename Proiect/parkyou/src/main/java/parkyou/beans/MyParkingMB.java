@@ -93,7 +93,7 @@ public class MyParkingMB implements Serializable {
            return;
         }
         if (has(id)) {
-            selectedParking = ParkingspotModel.findById(id);
+            selectedParking = parkingspotModel.findById(id);
         }
     }
     

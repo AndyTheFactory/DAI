@@ -74,10 +74,8 @@ public class User implements Serializable {
     @Column(name = "GRP")
     private String group;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "HOMEX")
-    private Double homex;
-    @Column(name = "HOMEY")
-    private Double homey;
+    @Column(name = "LASTLOGIN")
+    private Double lastlogin;
     @Lob
     @Column(name = "AVATAR")
     private  byte[] avatar;
@@ -145,28 +143,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Double getHomex() {
-        return homex;
-    }
-
-    public void setHomex(Double homex) {
-        this.homex = homex;
-    }
-
-    public Double getHomey() {
-        return homey;
-    }
-
-    public void setHomey(Double homey) {
-        this.homey = homey;
-    }
-
     public Serializable getAvatar() {
         return avatar;
     }
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+    }
+
+    public Double getLastlogin() {
+        return lastlogin;
+    }
+
+    public void setLastlogin(Double lastlogin) {
+        this.lastlogin = lastlogin;
     }
 
     public String getGroup() {
